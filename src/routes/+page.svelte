@@ -3,10 +3,18 @@
 	import type { ActionData } from './$types.js';
 	import { schema } from './schema.js';
 	export let form: ActionData;
-	const { zodActionEnhance } = createForm(schema, form);
+	const { zodActionEnhance, state } = createForm(schema, form);
+	$: console.log($state);
 </script>
 
 <form action="?/do_thing" method="post" use:zodActionEnhance>
-	<input type="text" name="desc" />
+	{#if $state.loading}
+		<div>loading</div>
+	{/if}
+
+	<label for="desc">description</label>
+	<input type="text" name="desc" id="desc" />
+
+	<br />
 	<button type="submit">enviar</button>
 </form>
