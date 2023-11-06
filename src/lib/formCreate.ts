@@ -30,9 +30,11 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 		errors.subscribe((errors) =>
 			inputs.forEach((input) => {
 				if (Object.keys(errors).includes(input.name)) {
-					input.setAttribute('aria-invalid', 'true');
-				} else {
-					input.removeAttribute('aria-invalid');
+					if (errors[input.name]) {
+						input.setAttribute('aria-invalid', 'true');
+					} else {
+						input.removeAttribute('aria-invalid');
+					}
 				}
 			})
 		);
@@ -52,6 +54,7 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 			state.startloading();
 
 			return ({ update, result }) => {
+				formStore.restartErrors();
 				state.stoploading();
 				if (result.type == 'success') {
 					state.markAsDone(true);
