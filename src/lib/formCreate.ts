@@ -12,6 +12,19 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 		($formStore: any) => ($formStore && $formStore.errors) ?? {}
 	);
 
+	const cleanErrorOnInput = (formElement: HTMLFormElement) => {
+		const handleInput = (e: any) => formStore.cleanError(e.target?.name);
+		const inputs = formElement.querySelectorAll('input');
+
+		inputs.forEach((input) => input.addEventListener('input', handleInput));
+
+		return {
+			destroy: () => {
+				inputs.forEach((input) => input.removeEventListener('input', handleInput));
+			}
+		};
+	};
+
 	const zodActionEnhance = (formElement: HTMLFormElement) => {
 		const { destroy } = enhance(formElement, ({ formData, cancel }) => {
 			formStore.restartErrors();
@@ -20,8 +33,7 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 			if (!zodRes.success) {
 				formStore.setErrors(zodRes.error.flatten().fieldErrors);
 				console.error(zodRes.error.flatten().fieldErrors);
-				cancel();
-				return;
+				return cancel();
 			}
 			state.startloading();
 
@@ -31,12 +43,9 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 			};
 		});
 		return {
-			destroy: () => {
-				destroy();
-				console.log('destroyed');
-			}
+			destroy: () => destroy()
 		};
 	};
 
-	return { zodActionEnhance, state: readonly(state), errors };
+	return { zodActionEnhance, cleanErrorOnInput, state: readonly(state), errors };
 }
