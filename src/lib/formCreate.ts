@@ -13,7 +13,7 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 	);
 
 	const zodActionEnhance = (formElement: HTMLFormElement) => {
-		enhance(formElement, ({ formData, cancel }) => {
+		const { destroy } = enhance(formElement, ({ formData, cancel }) => {
 			formStore.restartErrors();
 
 			const zodRes = zodSchema.safeParse(Object.fromEntries(formData));
@@ -30,6 +30,12 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 				update();
 			};
 		});
+		return {
+			destroy: () => {
+				destroy();
+				console.log('destroyed');
+			}
+		};
 	};
 
 	return { zodActionEnhance, state: readonly(state), errors };
