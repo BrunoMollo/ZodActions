@@ -13,8 +13,12 @@
 <svelte:head>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
 </svelte:head>
+
 <main class="container">
 	<h1>Form example</h1>
+	{#if $state.done}
+		<article>Form succesfully sent ✅</article>
+	{/if}
 	<form
 		action="?/do_thing"
 		method="post"
