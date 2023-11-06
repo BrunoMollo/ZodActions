@@ -25,6 +25,19 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 		};
 	};
 
+	const invalidateInputs = (formElement: HTMLFormElement) => {
+		const inputs = formElement.querySelectorAll('input');
+		errors.subscribe((errors) =>
+			inputs.forEach((input) => {
+				if (Object.keys(errors).includes(input.name)) {
+					input.setAttribute('aria-invalid', 'true');
+				} else {
+					input.removeAttribute('aria-invalid');
+				}
+			})
+		);
+	};
+
 	const zodActionEnhance = (formElement: HTMLFormElement) => {
 		const { destroy } = enhance(formElement, ({ formData, cancel }) => {
 			formStore.restartErrors();
@@ -47,5 +60,5 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 		};
 	};
 
-	return { zodActionEnhance, cleanErrorOnInput, state: readonly(state), errors };
+	return { zodActionEnhance, cleanErrorOnInput, invalidateInputs, errors, state: readonly(state) };
 }
