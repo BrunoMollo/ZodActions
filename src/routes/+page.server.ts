@@ -1,4 +1,4 @@
-import { fail, type Actions } from '@sveltejs/kit';
+import type { Actions } from '@sveltejs/kit';
 import { schema } from './schema.js';
 import { backendValidate } from '$lib/backendValidate.js';
 
@@ -16,8 +16,8 @@ export const actions: Actions = {
 
 		console.log(data);
 
-		if (Math.random() > 0.5) {
-			return fail(400, { message: 'I failed' });
-		}
+		// if (Math.random() > 0.5) {
+		// 	return fail(400, { message: 'I failed' });
+		// }
 	}
 };
