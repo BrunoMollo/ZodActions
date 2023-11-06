@@ -1,31 +1,36 @@
 import { enhance } from '$app/forms';
-import { readonly, writable } from 'svelte/store';
+import { derived, readonly, type Stores } from 'svelte/store';
 import type { ZodObject, ZodRawShape } from 'zod';
+import { createStateStore } from './createStateStore.js';
+import { createFormStore } from './createFormStore.js';
 
-function createStateStore() {
-	const { subscribe, set, update } = writable({ loading: false });
-	return {
-		subscribe,
-		startloading: () => update((state) => ({ ...state, loading: true })),
-		stoploading: () => update((state) => ({ ...state, loading: false }))
-	};
-}
-
-export function createForm<T extends ZodRawShape, F>(z: ZodObject<T>, form: F) {
-	const formStore = writable(form);
+export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, form: F) {
+	const formStore = createFormStore(form);
 	const state = createStateStore();
+	const errors = derived<Stores, Partial<T>>(
+		formStore,
+		($formStore: any) => ($formStore && $formStore.errors) ?? {}
+	);
 
 	const zodActionEnhance = (formElement: HTMLFormElement) => {
-		enhance(formElement, () => {
-			console.log('entered');
+		enhance(formElement, ({ formData, cancel }) => {
+			formStore.restartErrors();
+
+			const zodRes = zodSchema.safeParse(Object.fromEntries(formData));
+			if (!zodRes.success) {
+				formStore.setErrors(zodRes.error.flatten().fieldErrors);
+				console.error(zodRes.error.flatten().fieldErrors);
+				cancel();
+				return;
+			}
 			state.startloading();
+
 			return ({ update }) => {
-				console.log('recived');
 				state.stoploading();
 				update();
 			};
 		});
 	};
 
-	return { zodActionEnhance, state: readonly(state) };
+	return { zodActionEnhance, state: readonly(state), errors };
 }
