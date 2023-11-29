@@ -1,6 +1,13 @@
 import type { Actions } from '@sveltejs/kit';
 import { fruitSchema } from './fruitSchema.js';
 import { backendValidate } from '$lib/backendValidate.js';
+import type { PageServerLoad } from './$types.js';
+
+const fruits = [{ name: 'Banana' }, { name: 'Apple' }]
+export const load: PageServerLoad = () => {
+	return { fruits }
+}
+
 
 function sleep(ms: number) {
 	const DEF_DELAY = 1000;
@@ -16,8 +23,6 @@ export const actions: Actions = {
 
 		console.log(data);
 
-		// if (Math.random() > 0.5) {
-		// 	return fail(400, { message: 'I failed' });
-		// }
+		fruits.push(data)
 	}
 };

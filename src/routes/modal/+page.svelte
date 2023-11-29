@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { createForm } from '$lib/formCreate.js';
-	import { error } from '@sveltejs/kit';
+	import { fade } from 'svelte/transition';
+	import type { PageData } from './$types.js';
 	import type { ActionData } from './$types.js';
 	import { fruitSchema } from './fruitSchema.js';
+
+	export let data: PageData;
 	export let form: ActionData;
-	const { zodActionEnhance, state, errors, cleanErrorOnInput, invalidateInputs } = createForm(
+	const { zodActionEnhance, state, errors, invalidateInputs, cleanErrorOnInput } = createForm(
 		fruitSchema,
 		form
 	);
@@ -16,9 +19,16 @@
 		<article>
 			<h3>New Fruit</h3>
 			{#if $errors.name}
-				<span class="warn">{$errors.name}</span>
+				<span class="warn" transition:fade>{$errors.name}</span>
 			{/if}
-			<form action="" method="POST" use:zodActionEnhance use:invalidateInputs>
+			<form
+				action=""
+				method="POST"
+				use:zodActionEnhance
+				use:invalidateInputs
+				use:cleanErrorOnInput
+				on:submitDone={() => dialog.close()}
+			>
 				<input type="text" name="name" placeholder="Fruit name" />
 				<button type="submit" aria-busy={$state.loading}>Add</button>
 			</form>
@@ -27,6 +37,12 @@
 	</dialog>
 
 	<button on:click={() => dialog.showModal()}>add fruit</button>
+
+	<ul>
+		{#each data.fruits as fruit}
+			<li transition:fade>{fruit.name}</li>
+		{/each}
+	</ul>
 </article>
 
 <style>

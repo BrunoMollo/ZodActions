@@ -3,6 +3,7 @@ import { derived, readonly, type Stores } from 'svelte/store';
 import type { ZodObject, ZodRawShape } from 'zod';
 import { createStateStore } from './createStateStore.js';
 import { createFormStore } from './createFormStore.js';
+import type { Action } from 'svelte/action';
 
 export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, form: F) {
 	const formStore = createFormStore(form);
@@ -45,7 +46,10 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 		})
 	};
 
-	const zodActionEnhance = (formElement: HTMLFormElement) => {
+	type Attibutes = {
+		'on:submitDone'?: (event: CustomEvent) => any
+	}
+	const zodActionEnhance: Action<HTMLFormElement, any, Attibutes> = (formElement: HTMLFormElement) => {
 		const { destroy } = enhance(formElement, ({ formData, cancel }) => {
 			formStore.restartErrors();
 			state.markAsDone(false);
@@ -63,6 +67,7 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 				state.stoploading();
 				if (result.type == 'success') {
 					state.markAsDone(true);
+					formElement.dispatchEvent(new CustomEvent('submitDone'))
 				}
 				update();
 			};
