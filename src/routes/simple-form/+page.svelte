@@ -23,12 +23,12 @@
 		use:invalidateInputs
 	>
 		{#if $errors.name}
-			<span class="warning" transition:fade>{$errors.name}</span>
+			<span class="warn" transition:fade>{$errors.name}</span>
 		{/if}
 		<input type="text" name="name" placeholder="full name" />
 
 		{#if $errors.age}
-			<span class="warning" transition:fade>{$errors.age}</span>
+			<span class="warn" transition:fade>{$errors.age}</span>
 		{/if}
 		<input type="number" name="age" placeholder="age" />
 
@@ -37,10 +37,10 @@
 </article>
 
 <style>
+	.warn {
+		color: red;
+	}
 	article {
 		padding: 3rem;
-	}
-	.warning {
-		color: red;
 	}
 </style>

@@ -38,6 +38,11 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 				}
 			})
 		);
+		state.subscribe(({ loading }) => {
+			if (loading) {
+				inputs.forEach((input) => input.removeAttribute('aria-invalid'))
+			}
+		})
 	};
 
 	const zodActionEnhance = (formElement: HTMLFormElement) => {
