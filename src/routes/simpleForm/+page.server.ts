@@ -1,5 +1,5 @@
 import type { Actions } from '@sveltejs/kit';
-import { schema } from './schema.js';
+import { studentSchema } from './studentSchema.js';
 import { backendValidate } from '$lib/backendValidate.js';
 
 function sleep(ms: number) {
@@ -9,7 +9,7 @@ function sleep(ms: number) {
 
 export const actions: Actions = {
 	do_thing: async ({ request }) => {
-		const { failure, data } = await backendValidate(schema, request);
+		const { failure, data } = await backendValidate(studentSchema, request);
 		if (failure) return failure;
 
 		await sleep(1000);
