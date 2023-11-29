@@ -7,10 +7,8 @@
 
 	export let data: PageData;
 	export let form: ActionData;
-	const { zodActionEnhance, state, errors, invalidateInputs, cleanErrorOnInput } = createForm(
-		fruitSchema,
-		form
-	);
+	const { zodActionEnhance, state, errors, failData, invalidateInputs, cleanErrorOnInput } =
+		createForm(fruitSchema, form);
 	let dialog: HTMLDialogElement;
 </script>
 
@@ -18,6 +16,11 @@
 	<dialog bind:this={dialog}>
 		<article>
 			<h3>New Fruit</h3>
+
+			{#if $failData}
+				<span class="warn">{$failData.msj}</span>
+			{/if}
+
 			{#if $errors.name}
 				<span class="warn" transition:fade>{$errors.name}</span>
 			{/if}
@@ -32,7 +35,7 @@
 				<input type="text" name="name" placeholder="Fruit name" />
 				<button type="submit" aria-busy={$state.loading}>Add</button>
 			</form>
-			<button on:click={() => dialog.close()}>close</button>
+			<button on:click={() => dialog.close()} class="secondary">Close</button>
 		</article>
 	</dialog>
 

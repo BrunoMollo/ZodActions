@@ -1,5 +1,5 @@
 import { enhance } from '$app/forms';
-import { derived, readonly, type Stores } from 'svelte/store';
+import { derived, readonly, writable, type Stores } from 'svelte/store';
 import type { ZodObject, ZodRawShape } from 'zod';
 import { createStateStore } from './createStateStore.js';
 import { createFormStore } from './createFormStore.js';
@@ -12,6 +12,7 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 		formStore,
 		($formStore: any) => ($formStore && $formStore.errors) ?? {}
 	);
+	const failData = writable<null | Record<string, unknown>>(null)
 
 	const cleanErrorOnInput = (formElement: HTMLFormElement) => {
 		const handleInput = (e: any) => formStore.cleanError(e.target?.name);
@@ -68,6 +69,10 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 				if (result.type == 'success') {
 					state.markAsDone(true);
 					formElement.dispatchEvent(new CustomEvent('submitDone'))
+					failData.set(null)
+				}
+				if (result.type == 'failure') {
+					failData.set(result.data ?? null)
 				}
 				update();
 			};
@@ -77,5 +82,8 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 		};
 	};
 
-	return { zodActionEnhance, cleanErrorOnInput, invalidateInputs, errors, state: readonly(state) };
+	return {
+		zodActionEnhance, cleanErrorOnInput, invalidateInputs,
+		errors, state: readonly(state), failData: readonly(failData)
+	};
 }

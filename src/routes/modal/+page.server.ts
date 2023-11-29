@@ -1,4 +1,4 @@
-import type { Actions } from '@sveltejs/kit';
+import { fail, type Actions } from '@sveltejs/kit';
 import { fruitSchema } from './fruitSchema.js';
 import { backendValidate } from '$lib/backendValidate.js';
 import type { PageServerLoad } from './$types.js';
@@ -22,6 +22,13 @@ export const actions: Actions = {
 		await sleep(1000);
 
 		console.log(data);
+
+		if (fruits.map(x => x.name).includes(data.name)) {
+			const msj = 'can not have two fruits with the same name'
+			console.log(msj)
+			return fail(409, { msj })
+		}
+
 
 		fruits.push(data)
 	}
