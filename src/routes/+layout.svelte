@@ -12,25 +12,25 @@
 <main>
 	<slot />
 </main>
+<footer class="container">
+	Repo: <a href="https://github.com/BrunoMollo/ZodActions">
+		https://github.com/BrunoMollo/ZodActions</a
+	>
+</footer>
 
 <style>
 	nav {
+		padding-left: 1rem;
 		height: 3rem;
 		display: flex;
 		flex-direction: row;
 		justify-items: center;
 	}
 	.links {
+		margin: 1rem;
 		display: flex;
 		flex-direction: row;
 		gap: 2rem;
-		justify-items: end;
-		align-items: end;
-		padding-bottom: 1rem;
 		padding-right: 2.5rem;
-	}
-
-	.links a {
-		height: 2rem;
 	}
 </style>

@@ -11,7 +11,7 @@
 </script>
 
 <article class="container">
-	<h2>Form example</h2>
+	<h2>Simple form</h2>
 	{#if $state.done}
 		<article>Form succesfully sent ✔️</article>
 	{/if}

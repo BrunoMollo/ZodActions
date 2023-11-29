@@ -13,6 +13,7 @@
 </script>
 
 <article class="container">
+	<h2>Form in a modal</h2>
 	<dialog bind:this={dialog}>
 		<article>
 			<h3>New Fruit</h3>
@@ -32,7 +33,7 @@
 				use:cleanErrorOnInput
 				on:submitDone={() => dialog.close()}
 			>
-				<input type="text" name="name" placeholder="Fruit name" />
+				<input type="text" name="name" placeholder="Fruit name" required />
 				<button type="submit" aria-busy={$state.loading}>Add</button>
 			</form>
 			<button on:click={() => dialog.close()} class="secondary">Close</button>
