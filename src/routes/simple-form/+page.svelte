@@ -10,8 +10,8 @@
 	);
 </script>
 
-<main class="container">
-	<h1>Form example</h1>
+<article class="container">
+	<h2>Form example</h2>
 	{#if $state.done}
 		<article>Form succesfully sent ✔️</article>
 	{/if}
@@ -34,9 +34,12 @@
 
 		<button type="submit" aria-busy={$state.loading}>SEND</button>
 	</form>
-</main>
+</article>
 
 <style>
+	article {
+		padding: 3rem;
+	}
 	.warning {
 		color: red;
 	}

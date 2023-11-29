@@ -3,9 +3,34 @@
 </svelte:head>
 
 <nav>
-	<h1>Zod Actions</h1>
-	<a href="simpleForm">simple form</a>
+	<a href="/"><h1>Zod Actions</h1></a>
+	<div class="links">
+		<a href="simple-form">simple form</a>
+		<a href="modal">modal</a>
+	</div>
 </nav>
 <main>
 	<slot />
 </main>
+
+<style>
+	nav {
+		height: 3rem;
+		display: flex;
+		flex-direction: row;
+		justify-items: center;
+	}
+	.links {
+		display: flex;
+		flex-direction: row;
+		gap: 2rem;
+		justify-items: end;
+		align-items: end;
+		padding-bottom: 1rem;
+		padding-right: 2.5rem;
+	}
+
+	.links a {
+		height: 2rem;
+	}
+</style>
