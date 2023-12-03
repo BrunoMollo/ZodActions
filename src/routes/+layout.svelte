@@ -7,6 +7,7 @@
 	<div class="links">
 		<a href="simple-form">simple form</a>
 		<a href="modal">modal</a>
+		<a href="repited-names">repited names</a>
 	</div>
 </nav>
 <main>

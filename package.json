@@ -1,6 +1,6 @@
 {
-	"name": "zodactions",
-	"version": "0.0.1",
+	"name": "zod-actions",
+	"version": "0.0.3",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -27,7 +27,8 @@
 		"!dist/**/*.spec.*"
 	],
 	"peerDependencies": {
-		"svelte": "^4.0.0"
+		"svelte": "^4.0.0",
+		"@sveltejs/kit":"^1.27.4"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",

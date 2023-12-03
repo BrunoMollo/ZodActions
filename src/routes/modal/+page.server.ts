@@ -1,7 +1,7 @@
 import { fail, type Actions } from '@sveltejs/kit';
 import { fruitSchema } from './fruitSchema.js';
-import { backendValidate } from '$lib/backendValidate.js';
 import type { PageServerLoad } from './$types.js';
+import { backendValidate } from '$lib/index.js';
 
 const fruits = [{ name: 'Banana' }, { name: 'Apple' }]
 export const load: PageServerLoad = () => {

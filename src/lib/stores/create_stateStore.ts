@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-export function createStateStore() {
+export function create_stateStore() {
 	const { subscribe, update } = writable({ loading: false, done: false });
 	return {
 		subscribe,
@@ -9,3 +9,5 @@ export function createStateStore() {
 		markAsDone: (done: boolean) => update((state) => ({ ...state, done }))
 	};
 }
+
+export type StateStore = ReturnType<typeof create_stateStore>

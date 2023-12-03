@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-export function createFormStore<T>(form: T) {
+export function create_formStore<T>(form: T) {
 	const { subscribe, update } = writable(form);
 	return {
 		subscribe,
@@ -16,3 +16,5 @@ export function createFormStore<T>(form: T) {
 			})
 	};
 }
+
+export type FormStore = ReturnType<typeof createFormStore>
