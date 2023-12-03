@@ -4,6 +4,7 @@ import type { FailDataStore } from '$lib/stores/create_failDataStore.js';
 import type { FormStore } from '$lib/stores/create_formStore.js';
 import type { StateStore } from '$lib/stores/create_stateStore.js';
 import { formatErrors } from '$lib/utils/formatErrors.js';
+import { processFormData } from '$lib/utils/processFormData.js';
 import type { Action } from 'svelte/action';
 import type { ZodObject, ZodRawShape } from 'zod';
 
@@ -23,7 +24,7 @@ export function make_enhance<T extends ZodRawShape>(
 			state.markAsDone(false);
 
 
-			const zodRes = zodSchema.safeParse(Object.fromEntries(formData));
+			const zodRes = zodSchema.safeParse(processFormData(formData));
 			if (!zodRes.success) {
 				formStore.setErrors(formatErrors(zodRes));
 				console.error(formatErrors(zodRes));

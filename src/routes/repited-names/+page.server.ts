@@ -1,5 +1,6 @@
 import type { Actions } from '@sveltejs/kit';
-import { studentSchema } from '../simple-form/studentSchema.js';
+import { backendValidate } from '$lib/index.js';
+import { animalsSchema } from './animalsSchema.js';
 
 function sleep(ms: number) {
 	const DEF_DELAY = 1000;
@@ -8,14 +9,12 @@ function sleep(ms: number) {
 
 export const actions: Actions = {
 	default: async ({ request }) => {
-		// const { failure, data } = await backendValidate(studentSchema, request);
-		// if (failure) return failure;
 
-		console.log(await request.formData())
+		console.log('dsadsada')
+		const { failure, data } = await backendValidate(animalsSchema, request);
+		if (failure) return failure;
+		console.log(data)
+		await sleep(10)
 
-
-		// if (Math.random() > 0.5) {
-		// 	return fail(400, { message: 'I failed' });
-		// }
 	}
 };

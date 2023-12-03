@@ -1,5 +1,5 @@
 import { readonly } from 'svelte/store';
-import type { ZodObject, ZodRawShape, ZodSchema } from 'zod';
+import type { ZodObject, ZodRawShape } from 'zod';
 import { create_formStore } from './stores/create_formStore.js';
 import { create_stateStore } from './stores/create_stateStore.js';
 import { make_cleanErrorOnInput } from './use-actions/make_clearErrorOnInput.js';
@@ -11,8 +11,10 @@ import type { StringifyFields } from './utils/formatErrors.js';
 
 
 export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, form: F) {
+
 	const formStore = create_formStore(form);
 	const state = create_stateStore();
+
 	type Err = StringifyFields<typeof zodSchema._type>
 	const errors = create_errorsStore<Err>(formStore)
 
