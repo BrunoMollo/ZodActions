@@ -1,5 +1,10 @@
-import { string, z } from "zod";
+import { z } from "zod";
 
 export const animalsSchema = z.object({
-	name: string().min(3).max(10)
-}).array()
+	owner: z.string().min(3).max(10),
+	pets: z.object({
+		name: z.string().min(3).max(10),
+		age: z.coerce.number().max(120).positive()
+	}).array()
+})
+

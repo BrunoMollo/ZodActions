@@ -1,5 +1,6 @@
 import { fail } from '@sveltejs/kit';
 import type { ZodObject, ZodRawShape } from 'zod';
+import { formatErrors } from './utils/formatErrors.js';
 
 export async function backendValidate<T extends ZodRawShape>(
 	zodSchema: ZodObject<T>,
@@ -9,7 +10,7 @@ export async function backendValidate<T extends ZodRawShape>(
 	const zodRes = zodSchema.safeParse(rawObj);
 	if (!zodRes.success) {
 		return {
-			failure: fail(400, { errors: zodRes.error.flatten().fieldErrors })
+			failure: fail(400, { errors: formatErrors(zodRes) })
 		};
 	} else {
 		return {

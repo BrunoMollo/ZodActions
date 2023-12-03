@@ -17,4 +17,4 @@ export function create_formStore<T>(form: T) {
 	};
 }
 
-export type FormStore = ReturnType<typeof createFormStore>
+export type FormStore = ReturnType<typeof create_formStore>
