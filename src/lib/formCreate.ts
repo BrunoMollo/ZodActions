@@ -15,7 +15,9 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 	const formStore = create_formStore(form);
 	const state = create_stateStore();
 
-	type Err = StringifyFields<typeof zodSchema._type>
+	type Prettify<T> = { [K in keyof T]: T[K]; } & {};
+
+	type Err = Prettify<Partial<StringifyFields<typeof zodSchema._type>>>
 	const errors = create_errorsStore<Err>(formStore)
 
 	const failData = create_failDataStore()

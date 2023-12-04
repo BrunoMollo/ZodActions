@@ -15,10 +15,10 @@ export function processFormData(formData: FormData) {
 		const fields = [...new Set(arrayInputs.filter(x => x.arr === arrKey).map(x => x.field))]
 
 
-		type _acessParam = { inPos: string, withField: string }
-		const access = ({ inPos, withField }: _acessParam) => {
+		type _acessParam = { inArr: string, inPos: string, withField: string }
+		const access = ({ inArr, inPos, withField }: _acessParam) => {
 			return arrayInputs
-				.filter(x => x.field === withField && x.pos === inPos)
+				.filter(x => x.field === withField && x.pos === inPos && x.arr === inArr)
 				.map(({ arr, pos, field }) => formData.get(`${arr}[${pos}].${field}`)?.toString() ?? '')
 				.pop()
 		}
@@ -26,7 +26,7 @@ export function processFormData(formData: FormData) {
 		for (let pos of positions) {
 			const auxMapObject = new Map();
 			for (let field of fields) {
-				auxMapObject.set(field, access({ inPos: pos, withField: field }));
+				auxMapObject.set(field, access({ inArr: arrKey, inPos: pos, withField: field }));
 			}
 			finalMap.get(arrKey).push(Object.fromEntries(auxMapObject));
 		}

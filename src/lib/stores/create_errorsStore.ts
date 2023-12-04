@@ -3,7 +3,7 @@ import type { FormStore } from "./create_formStore.js";
 
 export const create_errorsStore = <T>(formStore: FormStore) => {
 
-	return derived<Stores, Partial<T>>(
+	return derived<Stores, T>(
 		formStore,
 		($formStore: any) => ($formStore && $formStore.errors) ?? {}
 	);

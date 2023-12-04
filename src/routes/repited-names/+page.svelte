@@ -19,14 +19,14 @@
 		<input type="text" name="owner" placeholder="owner" />
 
 		{#each [0, 1] as i}
-			{#if $errors.dogs?.[i].name}
-				<span class="warn"> {$errors.dogs?.[i].name}</span>
+			{#if $errors.dogs?.at(i, 'name')}
+				<span class="warn"> {$errors.dogs.at(i, 'name')}</span>
 			{/if}
 			<input type="text" name="dogs[{i}].name" placeholder="dog name" />
 		{/each}
 		{#each [0, 1] as i}
-			{#if $errors.cats?.[i].name}
-				<span class="warn"> {$errors.cats?.[i].name}</span>
+			{#if $errors.cats?.at(i, 'name')}
+				<span class="warn"> {$errors.cats.at(i, 'name')}</span>
 			{/if}
 			<input type="text" name="cats[{i}].name" placeholder="dog name" />
 		{/each}

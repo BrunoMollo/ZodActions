@@ -1,33 +1,26 @@
 import type { SafeParseError } from "zod";
 
 
+
 export type StringifyFields<T> = {
-	[K in keyof T]: T[K] extends Object[] ? { [SK in keyof T[K][0]]: string }[] : string;
+	[K in keyof T]: T[K] extends Object[] ? { at: ((index: number, field: keyof T[K][0]) => string | false) } : string;
 };
 
 
 export function formatErrors<T>(zodRes: SafeParseError<T>) {
-
 	if (!zodRes.success) {
 		const err = zodRes.error.format();
 
-		for (let key in err) { //key: owner, pets
-			if (key === '_errors') continue
+		for (let key_1 in err) { //key: owner, pets
+			if (key_1 === '_errors') continue
+
 			//@ts-ignore
-			if (Object.entries(err[key]).length === 1) {
+			if (Object.keys(err[key_1]).length === 1) {
 				//@ts-ignore
-				err[key] = err[key]._errors[0];
+				err[key_1] = err[key_1]._errors[0] ?? false;
 			} else {
 				//@ts-ignore
-				for (let i = 0; err[key][i]; i++) { //pets[0], pets[1]
-					//@ts-ignore
-					for (let subkey in err[key][i]) { // name, age
-						if (subkey === '_errors') continue
-						//@ts-ignore
-
-						err[key][i][subkey] = err[key][i][subkey]._errors[0] ?? false //err.[pets][0][name]._errors[0]
-					}
-				}
+				err[key_1].at = create_lookup_function(err[key_1])
 			}
 		}
 		return err as StringifyFields<T>
@@ -37,4 +30,16 @@ export function formatErrors<T>(zodRes: SafeParseError<T>) {
 
 
 
+
+function create_lookup_function(original: any): any {
+	return (index: number, field: string) => {
+		if (original && original[index]) {
+			return original[index][field]._errors[0] ?? false
+		}
+		else {
+			return false
+		}
+
+	}
+}
 
