@@ -7,9 +7,12 @@
 
 	export let data: PageData;
 	export let form: ActionData;
-	const { zodActionEnhance, state, errors, failData, invalidateInputs, cleanErrorOnInput } =
-		createForm(fruitSchema, form);
+
 	let dialog: HTMLDialogElement;
+
+	const zodAction = createForm(fruitSchema, form);
+	const { zodActionEnhance, cleanErrorOnInput } = zodAction;
+	const { state, errors, failData } = zodAction;
 </script>
 
 <article class="container">
@@ -29,7 +32,6 @@
 				action=""
 				method="POST"
 				use:zodActionEnhance
-				use:invalidateInputs
 				use:cleanErrorOnInput
 				on:submitDone={() => dialog.close()}
 			>

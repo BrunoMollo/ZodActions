@@ -4,15 +4,15 @@
 	import { animalsSchema } from './animalsSchema.js';
 
 	export let form: ActionData;
-	const { zodActionEnhance, state, errors, cleanErrorOnInput, invalidateInputs } = createForm(
-		animalsSchema,
-		form
-	);
+
+	const zodAction = createForm(animalsSchema, form);
+	const { zodActionEnhance, cleanErrorOnInput } = zodAction;
+	const { state, errors } = zodAction;
 </script>
 
 <article class="container">
 	<h2>From with arrays</h2>
-	<form action="" method="post" use:zodActionEnhance use:cleanErrorOnInput use:invalidateInputs>
+	<form action="" method="post" use:zodActionEnhance use:cleanErrorOnInput>
 		{#if $errors.owner}
 			<span class="warn">{$errors.owner}</span>
 		{/if}

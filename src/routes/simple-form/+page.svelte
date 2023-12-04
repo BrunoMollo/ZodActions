@@ -4,10 +4,10 @@
 	import type { ActionData } from './$types.js';
 	import { studentSchema } from './studentSchema.js';
 	export let form: ActionData;
-	const { zodActionEnhance, state, errors, cleanErrorOnInput, invalidateInputs } = createForm(
-		studentSchema,
-		form
-	);
+
+	const zodAction = createForm(studentSchema, form);
+	const { zodActionEnhance, cleanErrorOnInput } = zodAction;
+	const { state, errors } = zodAction;
 </script>
 
 <article class="container">
@@ -15,13 +15,7 @@
 	{#if $state.done}
 		<article data-testid="success_alert">Form succesfully sent</article>
 	{/if}
-	<form
-		action="?/do_thing"
-		method="post"
-		use:zodActionEnhance
-		use:cleanErrorOnInput
-		use:invalidateInputs
-	>
+	<form action="?/do_thing" method="post" use:zodActionEnhance use:cleanErrorOnInput>
 		{#if $errors.name}
 			<span data-testid="warn_name" class="warn" transition:fade>{$errors.name}</span>
 		{/if}
