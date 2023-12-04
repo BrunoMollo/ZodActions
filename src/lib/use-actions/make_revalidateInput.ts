@@ -7,7 +7,7 @@ export type SkipSend = {
 	get: () => boolean
 }
 
-export function make_cleanErrorOnInput(errors: ErrorsStore, state: StateStore) {
+export function make_revalidateInput(errors: ErrorsStore, state: StateStore) {
 	let skip_send_flag = false
 	const skipSend = {
 		set: (value: boolean) => skip_send_flag = value,
@@ -15,7 +15,7 @@ export function make_cleanErrorOnInput(errors: ErrorsStore, state: StateStore) {
 	}
 	return {
 		skipSend,
-		cleanErrorOnInput:
+		revalidateInput:
 			(formElement: HTMLFormElement) => {
 
 				const btn = formElement.querySelector('button')

@@ -11,7 +11,7 @@
 	let dialog: HTMLDialogElement;
 
 	const zodAction = createForm(fruitSchema, form);
-	const { zodActionEnhance, cleanErrorOnInput } = zodAction;
+	const { zodActionEnhance, revalidateInput } = zodAction;
 	const { state, errors, failData } = zodAction;
 </script>
 
@@ -32,7 +32,7 @@
 				action=""
 				method="POST"
 				use:zodActionEnhance
-				use:cleanErrorOnInput
+				use:revalidateInput
 				on:submitDone={() => dialog.close()}
 			>
 				<input

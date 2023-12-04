@@ -7,7 +7,7 @@
 	export let form: ActionData;
 
 	const zodAction = createForm(todosSchema, form);
-	const { zodActionEnhance, cleanErrorOnInput } = zodAction;
+	const { zodActionEnhance, revalidateInput } = zodAction;
 	const { state, errors } = zodAction;
 
 	const todosSlots = createSlots(1, 4);
@@ -22,7 +22,7 @@
 		<button on:click={todosSlots.add} disabled={!$todosSlots.canAdd()}>ADD</button>
 		<button on:click={todosSlots.remove} disabled={!$todosSlots.canRemove()}>REMOVE</button>
 	</div>
-	<form action="" method="post" use:zodActionEnhance use:cleanErrorOnInput>
+	<form action="" method="post" use:zodActionEnhance use:revalidateInput>
 		{#each $todosSlots as i}
 			{#if $errors.todos?.at(i, 'desc')}
 				<span class="warn">{$errors.todos.at(i, 'desc')}</span>

@@ -7,13 +7,13 @@
 	export let form: ActionData;
 
 	const zodAction = createForm(animalsSchema, form);
-	const { zodActionEnhance, cleanErrorOnInput } = zodAction;
+	const { zodActionEnhance, revalidateInput } = zodAction;
 	const { state, errors } = zodAction;
 </script>
 
 <article class="container">
 	<h2>From with arrays</h2>
-	<form action="" method="post" use:zodActionEnhance use:cleanErrorOnInput>
+	<form action="" method="post" use:zodActionEnhance use:revalidateInput>
 		<span>Owner</span>
 		<input
 			type="text"

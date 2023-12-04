@@ -6,7 +6,7 @@
 	export let form: ActionData;
 
 	const zodAction = createForm(studentSchema, form);
-	const { zodActionEnhance, cleanErrorOnInput } = zodAction;
+	const { zodActionEnhance, revalidateInput } = zodAction;
 	const { state, errors } = zodAction;
 </script>
 
@@ -15,7 +15,7 @@
 	{#if $state.done}
 		<article data-testid="success_alert">Form succesfully sent</article>
 	{/if}
-	<form action="?/do_thing" method="post" use:zodActionEnhance use:cleanErrorOnInput>
+	<form action="?/do_thing" method="post" use:zodActionEnhance use:revalidateInput>
 		{#if $errors.name}
 			<span data-testid="warn_name" class="warn" transition:fade>{$errors.name}</span>
 		{/if}

@@ -7,7 +7,7 @@ import { formatErrors } from '$lib/utils/formatErrors.js';
 import { processFormData } from '$lib/utils/processFormData.js';
 import type { Action } from 'svelte/action';
 import type { ZodObject, ZodRawShape } from 'zod';
-import type { SkipSend } from './make_clearErrorOnInput.js';
+import type { SkipSend } from './make_revalidateInput.js';
 
 type Attibutes = {
 	'on:submitDone'?: (event: CustomEvent) => any
