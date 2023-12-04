@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createForm } from '$lib/formCreate.js';
+	import { createForm } from '$lib/createForm.js';
 	import { createSlots } from '$lib/index.js';
 	import type { ActionData } from './$types.js';
 	import { todosSchema } from './todosSchema.js';

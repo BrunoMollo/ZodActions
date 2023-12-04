@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createForm } from '$lib/formCreate.js';
+	import { createForm } from '$lib/createForm.js';
 	import { fade } from 'svelte/transition';
 	import type { ActionData } from './$types.js';
 	import { animalsSchema } from './animalsSchema.js';
