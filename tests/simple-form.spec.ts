@@ -1,12 +1,15 @@
 import { expect, test } from '@playwright/test';
-import { setDelay } from '../src/routes/sleep.js';
+import { setDelay } from '../src/routes/utils-testing.js';
 
 test.beforeAll(() => setDelay(2))
 
 test.describe('simple form', () => {
 
-	test('valid input should pass, start loading and stop loading', async ({ page }) => {
+	test.beforeEach(async ({ page }) => {
 		await page.goto('/simple-form');
+	})
+
+	test('valid input should pass, start loading and stop loading', async ({ page }) => {
 
 		await page.fill('input[name="name"]', 'your_username');
 		await page.fill('input[name="age"]', '32');
@@ -21,7 +24,6 @@ test.describe('simple form', () => {
 	});
 
 	test('if name and age are not provided, form should show error', async ({ page }) => {
-		await page.goto('/simple-form');
 
 		await page.click('button[type="submit"]');
 
@@ -33,7 +35,6 @@ test.describe('simple form', () => {
 	});
 
 	test('if name is not provided, form should show error', async ({ page }) => {
-		await page.goto('/simple-form');
 
 		await page.fill('input[name="age"]', '32');
 		await page.click('button[type="submit"]');
@@ -47,7 +48,6 @@ test.describe('simple form', () => {
 
 
 	test('if name is too short, form should show error', async ({ page }) => {
-		await page.goto('/simple-form');
 
 		await page.fill('input[name="name"]', 'a');
 		await page.fill('input[name="age"]', '82');
@@ -62,7 +62,6 @@ test.describe('simple form', () => {
 
 
 	test('if name is too long, form should show error', async ({ page }) => {
-		await page.goto('/simple-form');
 
 		await page.fill('input[name="name"]', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
 		await page.fill('input[name="age"]', '62');
@@ -77,7 +76,6 @@ test.describe('simple form', () => {
 
 
 	test('if age is not provided, form should show error', async ({ page }) => {
-		await page.goto('/simple-form');
 
 		await page.fill('input[name="name"]', 'your_username');
 		await page.click('button[type="submit"]');
@@ -91,7 +89,6 @@ test.describe('simple form', () => {
 
 
 	test('if age below 18, form should show error', async ({ page }) => {
-		await page.goto('/simple-form');
 
 		await page.fill('input[name="name"]', 'Bruno');
 		await page.fill('input[name="age"]', '12');
@@ -105,7 +102,6 @@ test.describe('simple form', () => {
 	});
 
 	test('if age over 160, form should show error', async ({ page }) => {
-		await page.goto('/simple-form');
 
 		await page.fill('input[name="name"]', 'Bruno');
 		await page.fill('input[name="age"]', '360');

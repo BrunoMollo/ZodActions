@@ -1,7 +1,7 @@
 import type { Actions } from '@sveltejs/kit';
 import { backendValidate } from '$lib/index.js';
 import { animalsSchema } from './animalsSchema.js';
-import { sleep } from '../sleep.js';
+import { sleep } from '../utils-testing.js';
 
 
 export const actions: Actions = {

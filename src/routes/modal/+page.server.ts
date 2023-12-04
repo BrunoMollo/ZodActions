@@ -2,9 +2,9 @@ import { fail, type Actions } from '@sveltejs/kit';
 import { fruitSchema } from './fruitSchema.js';
 import type { PageServerLoad } from './$types.js';
 import { backendValidate } from '$lib/index.js';
-import { sleep } from '../sleep.js';
+import { getFruits, sleep } from '../utils-testing.js';
 
-const fruits = [{ name: 'Banana' }, { name: 'Apple' }]
+const fruits = getFruits()
 export const load: PageServerLoad = () => {
 	return { fruits }
 }

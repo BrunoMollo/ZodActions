@@ -19,11 +19,11 @@
 			<h3>New Fruit</h3>
 
 			{#if $failData}
-				<span class="warn">{$failData.msj}</span>
+				<span class="warn" data-testid="warn_fail" transition:fade>{$failData.msj}</span>
 			{/if}
 
 			{#if $errors.name}
-				<span class="warn" transition:fade>{$errors.name}</span>
+				<span class="warn" data-testid="warn_name" transition:fade>{$errors.name}</span>
 			{/if}
 			<form
 				action=""
@@ -40,11 +40,11 @@
 		</article>
 	</dialog>
 
-	<button on:click={() => dialog.showModal()}>add fruit</button>
+	<button on:click={() => dialog.showModal()} data-testid="open_dialog">add fruit</button>
 
 	<ul>
 		{#each data.fruits as fruit}
-			<li transition:fade>{fruit.name}</li>
+			<li data-testid="fruit_list_item" transition:fade>{fruit.name}</li>
 		{/each}
 	</ul>
 </article>
