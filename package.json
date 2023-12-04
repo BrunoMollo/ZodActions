@@ -1,6 +1,27 @@
 {
 	"name": "zod-actions",
 	"version": "0.0.3",
+	"author": "Bruno Mollo <dia.mollo.bruno@gmail.com>",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/BrunoMollo/ZodActions"
+	},
+	"bugs": {
+		"url": "https://github.com/BrunoMollo/ZodActions/issues"
+	},
+	"description":"A validation first way to build Form Actions in SvelteKit",
+	"homepage": "https://github.com/BrunoMollo/zodActions",
+	"keywords": [
+		"typescript",
+		"schema",
+		"validation",
+		"forms",
+		"svelte kit",
+		"svelte",
+		"progressive enhancement",
+		"form actions"
+	],
+	"license": "MIT",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
