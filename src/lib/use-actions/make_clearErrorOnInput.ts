@@ -18,7 +18,6 @@ export function make_cleanErrorOnInput(errors: ErrorsStore, state: StateStore) {
 		cleanErrorOnInput:
 			(formElement: HTMLFormElement) => {
 
-				const inputs = formElement.querySelectorAll('input');
 				const btn = formElement.querySelector('button')
 
 				const handleInput = () => {
@@ -28,20 +27,20 @@ export function make_cleanErrorOnInput(errors: ErrorsStore, state: StateStore) {
 
 				errors.subscribe((err: any) => {
 					if (Object.keys(err).length > 0) {
-						inputs.forEach(input => input.addEventListener('input', handleInput))
+						formElement.addEventListener('input', handleInput)
 					}
 
 				})
 
 				state.subscribe(({ done }) => {
 					if (done) {
-						inputs.forEach((input) => input.removeEventListener('input', handleInput));
+						formElement.removeEventListener('input', handleInput)
 					}
 				})
 
 				return {
 					destroy: () => {
-						inputs.forEach((input) => input.removeEventListener('input', handleInput));
+						formElement.removeEventListener('input', handleInput)
 					}
 				};
 			}

@@ -33,7 +33,7 @@
 			type="number"
 			name="age"
 			placeholder="current age"
-			aria-invalid={$errors.name ? true : null}
+			aria-invalid={$errors.age ? true : null}
 		/>
 
 		<button type="submit" aria-busy={$state.loading}>SEND</button>

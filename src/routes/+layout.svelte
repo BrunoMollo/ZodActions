@@ -8,6 +8,7 @@
 		<a href="simple-form">Simple form</a>
 		<a href="modal">Modal</a>
 		<a href="multiple-arrays">Multiple arrays</a>
+		<a href="variable-array">Variable array</a>
 	</div>
 </nav>
 <main>
