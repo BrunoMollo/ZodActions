@@ -13,7 +13,7 @@
 <article class="container">
 	<h2>Simple form</h2>
 	{#if $state.done}
-		<article>Form succesfully sent ✔️</article>
+		<article data-testid="success_alert">Form succesfully sent</article>
 	{/if}
 	<form
 		action="?/do_thing"
@@ -23,12 +23,12 @@
 		use:invalidateInputs
 	>
 		{#if $errors.name}
-			<span class="warn" transition:fade>{$errors.name}</span>
+			<span data-testid="warn_name" class="warn" transition:fade>{$errors.name}</span>
 		{/if}
 		<input type="text" name="name" placeholder="full name" />
 
 		{#if $errors.age}
-			<span class="warn" transition:fade>{$errors.age}</span>
+			<span data-testid="warn_age" class="warn" transition:fade>{$errors.age}</span>
 		{/if}
 		<input type="number" name="age" placeholder="age" />
 
