@@ -8,9 +8,9 @@ This is a library built to streamline creating forms integrating SvelteKit's For
 
 
 ## Install
-```
+~~~bash
 npm i zod-actions
-```
+~~~
 
 ## References
 npm.js: https://www.npmjs.com/package/zod-actions

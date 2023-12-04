@@ -9,7 +9,7 @@
 	"bugs": {
 		"url": "https://github.com/BrunoMollo/ZodActions/issues"
 	},
-	"description":"A validation first way to build Form Actions in SvelteKit",
+	"description": "A validation first way to build Form Actions in SvelteKit",
 	"homepage": "https://github.com/BrunoMollo/zodActions",
 	"keywords": [
 		"typescript",
@@ -48,8 +48,8 @@
 		"!dist/**/*.spec.*"
 	],
 	"peerDependencies": {
-		"svelte": "^4.0.0",
-		"@sveltejs/kit":"^1.27.4"
+		"@sveltejs/kit": "^1.27.4",
+		"svelte": "^4.0.0"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
@@ -61,6 +61,7 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
+		"mdsvex": "^0.11.0",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
 		"publint": "^0.1.9",
