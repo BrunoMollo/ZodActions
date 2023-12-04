@@ -5,9 +5,9 @@
 <nav>
 	<a href="/"><h1>Zod Actions</h1></a>
 	<div class="links">
-		<a href="simple-form">simple form</a>
-		<a href="modal">modal</a>
-		<a href="repited-names">repited names</a>
+		<a href="simple-form">Simple form</a>
+		<a href="modal">Modal</a>
+		<a href="multiple-arrays">Multiple arrays</a>
 	</div>
 </nav>
 <main>
