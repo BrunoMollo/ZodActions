@@ -19,12 +19,22 @@
 		{#if $errors.name}
 			<span data-testid="warn_name" class="warn" transition:fade>{$errors.name}</span>
 		{/if}
-		<input type="text" name="name" placeholder="full name" />
+		<input
+			type="text"
+			name="name"
+			placeholder="full name"
+			aria-invalid={$errors.name ? true : null}
+		/>
 
 		{#if $errors.age}
 			<span data-testid="warn_age" class="warn" transition:fade>{$errors.age}</span>
 		{/if}
-		<input type="number" name="age" placeholder="age" />
+		<input
+			type="number"
+			name="age"
+			placeholder="current age"
+			aria-invalid={$errors.name ? true : null}
+		/>
 
 		<button type="submit" aria-busy={$state.loading}>SEND</button>
 	</form>

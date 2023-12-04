@@ -35,7 +35,13 @@
 				use:cleanErrorOnInput
 				on:submitDone={() => dialog.close()}
 			>
-				<input type="text" name="name" placeholder="Fruit name" required />
+				<input
+					type="text"
+					name="name"
+					placeholder="Fruit name"
+					required
+					aria-invalid={$errors.name ? true : null}
+				/>
 				<button type="submit" aria-busy={$state.loading}>Add</button>
 			</form>
 			<button on:click={() => dialog.close()} class="secondary">Close</button>
