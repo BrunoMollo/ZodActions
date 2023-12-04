@@ -1,43 +1,61 @@
 
-function retriveArrayInputsName(formData: FormData) {
-	const arrayKeys = [...formData.keys()]
-		.filter(x => x.includes('__'))
-		.map(x => x.split('__')[0])
-
-	return [...new Set(arrayKeys)]
-}
-
-
 export function processFormData(formData: FormData) {
 
-	const allArrayInputNames = retriveArrayInputsName(formData)
+	const arrayInputs = parseArrayInputsName(formData)
 
-	if (allArrayInputNames.length === 0) return Object.fromEntries(formData)
+	if (arrayInputs.length === 0) return Object.fromEntries(formData)
 
 	const finalMap = new Map();
+	const arraysKeys = [...new Set(arrayInputs.map(x => x.arr))]
 
-	allArrayInputNames.forEach((arrayKey) => {
-		finalMap.set(arrayKey, []);
+	arraysKeys.forEach((arrKey) => {
+		finalMap.set(arrKey, []);
 
-		const namesInsideArray = [...formData.keys()].filter(x => x.split('__')[0] === arrayKey)
+		const positions = [...new Set(arrayInputs.filter(x => x.arr === arrKey).map(x => x.pos))]
+		const fields = [...new Set(arrayInputs.filter(x => x.arr === arrKey).map(x => x.field))]
 
-		const valuesMatrix = namesInsideArray.map((name) => formData.getAll(name));
 
-		for (let i = 0; i < valuesMatrix[0].length; i++) {
-			const auxMapObject = new Map();
-			for (let j = 0; j < namesInsideArray.length; j++) {
-				auxMapObject.set(namesInsideArray[j].split('__')[1], valuesMatrix[j][i]);
-			}
-			finalMap.get(arrayKey).push(Object.fromEntries(auxMapObject));
+		type _acessParam = { inPos: string, withField: string }
+		const access = ({ inPos, withField }: _acessParam) => {
+			return arrayInputs
+				.filter(x => x.field === withField && x.pos === inPos)
+				.map(({ arr, pos, field }) => formData.get(`${arr}[${pos}].${field}`)?.toString() ?? '')
+				.pop()
 		}
 
-		formData.forEach((v, k) => {
-			if (!allArrayInputNames.includes(k.split('__')[0])) {
-				finalMap.set(k, v);
+		for (let pos of positions) {
+			const auxMapObject = new Map();
+			for (let field of fields) {
+				auxMapObject.set(field, access({ inPos: pos, withField: field }));
 			}
-		})
+			finalMap.get(arrKey).push(Object.fromEntries(auxMapObject));
+		}
 	})
 
-	return Object.fromEntries(finalMap);
+	getSimpleFields(formData).forEach(name => {
+		finalMap.set(name, formData.get(name))
+	})
 
+	const finalObject = Object.fromEntries(finalMap);
+	return finalObject
 }
+
+
+function getSimpleFields(formData: FormData) {
+	return [...formData.keys()]
+		.filter(
+			x => !(x.includes('.') && x.includes('[') && x.includes(']'))
+		)
+}
+
+function parseArrayInputsName(formData: FormData) {
+	return [...formData.keys()]
+		.filter(x => x.includes('.') && x.includes('[') && x.includes(']'))
+		.map(x => x.split(/[.[\]]/)) //separates by '.', '[', ']', you end up with an epmy string in the i=2
+		.map(x => ({
+			arr: x[0],
+			pos: x[1],
+			field: x[3],
+		}))
+}
+

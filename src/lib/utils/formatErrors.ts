@@ -1,12 +1,10 @@
-import { z, type SafeParseError } from "zod";
+import type { SafeParseError } from "zod";
 
 
 export type StringifyFields<T> = {
 	[K in keyof T]: T[K] extends Object[] ? { [SK in keyof T[K][0]]: string }[] : string;
 };
 
-const aaaa = z.object({ name: z.string(), arr: z.object({ foo: z.number() }).array() })
-type qqqqq = StringifyFields<typeof aaaa._type>
 
 export function formatErrors<T>(zodRes: SafeParseError<T>) {
 

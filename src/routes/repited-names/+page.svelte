@@ -19,10 +19,16 @@
 		<input type="text" name="owner" placeholder="owner" />
 
 		{#each [0, 1] as i}
-			{#if $errors.pets?.[i].name}
-				<span class="warn"> {$errors.pets?.[i].name}</span>
+			{#if $errors.dogs?.[i].name}
+				<span class="warn"> {$errors.dogs?.[i].name}</span>
 			{/if}
-			<input type="text" name="pets__name" placeholder="animal name" />
+			<input type="text" name="dogs[{i}].name" placeholder="dog name" />
+		{/each}
+		{#each [0, 1] as i}
+			{#if $errors.cats?.[i].name}
+				<span class="warn"> {$errors.cats?.[i].name}</span>
+			{/if}
+			<input type="text" name="cats[{i}].name" placeholder="dog name" />
 		{/each}
 
 		<button type="submit" aria-busy={$state.loading}>SEND</button>
