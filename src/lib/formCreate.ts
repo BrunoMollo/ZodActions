@@ -22,9 +22,10 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 
 	const failData = create_failDataStore()
 
+	const { cleanErrorOnInput, skipSend } = make_cleanErrorOnInput(errors, state)
 	return {
-		zodActionEnhance: make_enhance(zodSchema, formStore, state, failData),
-		cleanErrorOnInput: make_cleanErrorOnInput(formStore),
+		zodActionEnhance: make_enhance(zodSchema, formStore, state, failData, skipSend),
+		cleanErrorOnInput,
 		invalidateInputs: make_invalidateInputs(errors, state),
 		errors, state: readonly(state), failData: readonly(failData)
 	};

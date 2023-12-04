@@ -7,6 +7,7 @@ import { formatErrors } from '$lib/utils/formatErrors.js';
 import { processFormData } from '$lib/utils/processFormData.js';
 import type { Action } from 'svelte/action';
 import type { ZodObject, ZodRawShape } from 'zod';
+import type { SkipSend } from './make_clearErrorOnInput.js';
 
 type Attibutes = {
 	'on:submitDone'?: (event: CustomEvent) => any
@@ -15,10 +16,12 @@ export function make_enhance<T extends ZodRawShape>(
 	zodSchema: ZodObject<T>,
 	formStore: FormStore,
 	state: StateStore,
-	failData: FailDataStore
+	failData: FailDataStore,
+	skipSend: SkipSend
 ) {
 
 	const func: Action<HTMLFormElement, any, Attibutes> = (formElement: HTMLFormElement) => {
+
 		const { destroy } = enhance(formElement, ({ formData, cancel }) => {
 			formStore.restartErrors();
 			state.markAsDone(false);
@@ -27,9 +30,17 @@ export function make_enhance<T extends ZodRawShape>(
 			const zodRes = zodSchema.safeParse(processFormData(formData));
 			if (!zodRes.success) {
 				formStore.setErrors(formatErrors(zodRes));
-				console.error(formatErrors(zodRes));
+				if (!skipSend.get()) {
+					console.error(formatErrors(zodRes));
+				}
 				return cancel();
 			}
+			if (skipSend.get()) {
+				skipSend.set(false)
+				return cancel()
+			}
+
+
 			state.startloading();
 
 			return ({ update, result }) => {
