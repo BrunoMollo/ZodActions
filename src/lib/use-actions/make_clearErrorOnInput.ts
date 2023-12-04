@@ -8,7 +8,7 @@ export type SkipSend = {
 }
 
 export function make_cleanErrorOnInput(errors: ErrorsStore, state: StateStore) {
-	let skip_send_flag = true
+	let skip_send_flag = false
 	const skipSend = {
 		set: (value: boolean) => skip_send_flag = value,
 		get: () => skip_send_flag
