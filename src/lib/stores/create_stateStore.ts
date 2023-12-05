@@ -6,7 +6,7 @@ export function create_stateStore() {
 		subscribe,
 		startloading: () => update((state) => ({ ...state, loading: true })),
 		stoploading: () => update((state) => ({ ...state, loading: false })),
-		markAsDone: (done: boolean) => update((state) => ({ ...state, done }))
+		markAsDone: (done: boolean) => update((state) => ({ ...state, done })),
 	};
 }
 

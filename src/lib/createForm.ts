@@ -10,7 +10,6 @@ import type { StringifyFields } from './utils/formatErrors.js';
 
 
 export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, form: F) {
-
 	const formStore = create_formStore(form);
 	const state = create_stateStore();
 
@@ -28,3 +27,7 @@ export function createForm<T extends ZodRawShape, F>(zodSchema: ZodObject<T>, fo
 		errors, state: readonly(state), failData: readonly(failData)
 	};
 }
+
+export type ZodAction<T extends ZodRawShape> = ReturnType<typeof createForm<T, any>>
+
+

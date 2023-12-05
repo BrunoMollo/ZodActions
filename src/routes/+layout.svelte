@@ -9,6 +9,7 @@
 		<a href="modal">Modal</a>
 		<a href="multiple-arrays">Multiple arrays</a>
 		<a href="variable-array">Variable array</a>
+		<a href="nested">Nested components</a>
 	</div>
 </nav>
 <main>
