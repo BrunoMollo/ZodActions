@@ -33,7 +33,7 @@ export function formatErrors<T>(zodRes: SafeParseError<T>) {
 
 function create_lookup_function(original: any): any {
 	return (index: number, field: string) => {
-		if (original && original[index]) {
+		if (original && original[index] && original[index][field] && original[index][field]._errors) {
 			return original[index][field]._errors[0] ?? false
 		}
 		else {
