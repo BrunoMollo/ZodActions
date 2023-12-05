@@ -18,7 +18,7 @@ export function make_revalidateInput(errors: ErrorsStore, state: StateStore) {
 		revalidateInput:
 			(formElement: HTMLFormElement) => {
 
-				const btn = formElement.querySelector('button')
+				const btn = formElement.querySelector('[type="submit"]') as HTMLButtonElement
 
 				const handleInput = () => {
 					skipSend.set(true)

@@ -20,7 +20,7 @@ export function formatErrors<T>(zodRes: SafeParseError<T>) {
 				err[key_1] = err[key_1]._errors[0] ?? false;
 			} else {
 				//@ts-ignore
-				err[key_1].at = create_lookup_function(err[key_1])
+				err[key_1] = { at: create_lookup_function(err[key_1]) }
 			}
 		}
 		return err as StringifyFields<T>
