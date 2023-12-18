@@ -1,15 +1,16 @@
 # Zod Actions ⚒️
 
-**IMPORTANT: This is still under construction, use at your own risk!!!**
+**IMPORTANT: uncompleted abandoned proyect, don't use**
 
-This is a library built to streamline creating forms integrating SvelteKit's FormActions and Zod validation, making progresive enhancement easy in a validation first way.
+I started this library as a way to built forms integrating SvelteKit's FormActions and Zod validation.
+Then i realized that there is already an already made library with the same idea, better done and tested than mine: SuperForms
+So i decided to archive this proyect, was a fun journey anyways. 
 
+Please use --> https://superforms.rocks
 
-
-
-## Install
+## Install (i would not do  it)
 ~~~bash
-npm i zod-actions
+npm i zod-actions (please, dont do it)
 ~~~
 
 ## References
